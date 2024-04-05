@@ -14,12 +14,12 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.transaction.PlatformTransactionManager;
-
-import java.io.File;
 
 @Configuration
 @RequiredArgsConstructor
@@ -28,9 +28,7 @@ public class BatchConfiguration {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
     @Bean
-    public ItemReader<Mower> reader() {
-        String rootPath = System.getProperty("user.dir");
-        String inputFilePath = rootPath + File.separator + "input" + File.separator + "input.txt";
+    public ItemReader<Mower> reader(@Value("${mower.input.filePath}") String inputFilePath) {
         return new MowerInstructionsReader(new FileSystemResource(inputFilePath));
     }
 
@@ -40,27 +38,25 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public ItemWriter<Mower> writer() {
-        String rootPath = System.getProperty("user.dir");
-        String outputFilePath = rootPath + File.separator + "output" + File.separator + "mower_output.txt";
+    public ItemWriter<Mower> writer(@Value("${mower.output.filePath}") String outputFilePath) {
         return new MowerItemWriter(outputFilePath);
     }
 
     @Bean
-    public Step step1() {
+    public Step step1(ItemReader<Mower> reader, ItemWriter<Mower> writer) {
         return new StepBuilder("step1", jobRepository)
                 .<Mower, Mower> chunk(1, transactionManager)
-                .reader(reader())
+                .reader(reader)
                 .processor(processor())
-                .writer(writer())
+                .writer(writer)
                 .build();
     }
 
     @Bean
-    public Job processMowerJob() {
+    public Job processMowerJob(@Qualifier("step1") Step step1) {
         return new JobBuilder("processMowerJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .flow(step1())
+                .flow(step1)
                 .end()
                 .build();
     }

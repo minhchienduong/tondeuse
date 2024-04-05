@@ -1,5 +1,6 @@
 package com.astrelya.tondeuse.model;
 
+import com.astrelya.tondeuse.model.enums.Command;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

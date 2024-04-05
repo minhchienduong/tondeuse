@@ -1,6 +1,6 @@
 package com.astrelya.tondeuse.batch.processor;
 
-import com.astrelya.tondeuse.model.Command;
+import com.astrelya.tondeuse.model.enums.Command;
 import com.astrelya.tondeuse.model.Lawn;
 import com.astrelya.tondeuse.model.Mower;
 import org.junit.jupiter.api.BeforeEach;

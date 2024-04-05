@@ -3,18 +3,14 @@ package com.astrelya.tondeuse.batch.reader;
 import com.astrelya.tondeuse.model.Mower;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mockito;
 import org.springframework.core.io.Resource;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import org.junit.jupiter.api.io.TempDir;
-
-import static java.nio.file.Path.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 

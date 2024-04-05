@@ -1,5 +1,6 @@
 package com.astrelya.tondeuse.model;
 
+import com.astrelya.tondeuse.model.enums.Command;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package com.astrelya.tondeuse.batch.reader;
 
-import com.astrelya.tondeuse.model.Command;
+import com.astrelya.tondeuse.model.enums.Command;
 import com.astrelya.tondeuse.model.Lawn;
 import com.astrelya.tondeuse.model.Mower;
 import org.springframework.batch.item.ItemReader;
@@ -37,6 +37,9 @@ public class MowerInstructionsReader implements ItemReader<Mower>{
             throw new IOException("Unexpected end of file; expected mower commands.");
         }
 
+        validateMowerPositionLine(mowerPositionLine);
+        validateMowerCommandsLine(mowerCommandsLine);
+
         return createMowerWithCommands(mowerPositionLine, mowerCommandsLine);
     }
 
@@ -46,6 +49,7 @@ public class MowerInstructionsReader implements ItemReader<Mower>{
         if (lawnSizeLine == null) {
             throw new IOException("Input file is empty, expected lawn size.");
         }
+        validateLawnSizeLine(lawnSizeLine);
         lawn = parseLawnSize(lawnSizeLine);
     }
 
@@ -79,5 +83,23 @@ public class MowerInstructionsReader implements ItemReader<Mower>{
             commandList.add(Command.valueOf(String.valueOf(commandChar)));
         }
         return commandList;
+    }
+
+    private void validateLawnSizeLine(String lawnSizeLine) throws IllegalArgumentException {
+        if (!lawnSizeLine.matches("\\d+ \\d+")) {
+            throw new IllegalArgumentException("Invalid lawn size format. Expected format: 'width height'");
+        }
+    }
+
+    private void validateMowerPositionLine(String positionLine) throws IllegalArgumentException {
+        if (!positionLine.matches("\\d+ \\d+ [NSEW]")) {
+            throw new IllegalArgumentException("Invalid mower position format. Expected format: 'x y orientation'");
+        }
+    }
+
+    private void validateMowerCommandsLine(String commandsLine) throws IllegalArgumentException {
+        if (!commandsLine.matches("[ADG]+")) {
+            throw new IllegalArgumentException("Invalid mower commands format. Expected only 'A', 'D', or 'G' characters without spaces.");
+        }
     }
 }
