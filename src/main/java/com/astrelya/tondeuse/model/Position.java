@@ -1,5 +1,6 @@
 package com.astrelya.tondeuse.model;
 
+import com.astrelya.tondeuse.model.enums.Orientation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,5 +11,5 @@ import lombok.Setter;
 public class Position {
     private int x;
     private int y;
-    private char orientation;
+    private Orientation orientation;
 }

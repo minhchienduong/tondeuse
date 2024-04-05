@@ -1,6 +1,7 @@
 package com.astrelya.tondeuse.batch.reader;
 
 import com.astrelya.tondeuse.model.Mower;
+import com.astrelya.tondeuse.model.enums.Orientation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -48,7 +49,7 @@ public class MowerInstructionsReaderTest {
 
         assertEquals(1, mower.getPosition().getX(), "Mower's X position should be 1");
         assertEquals(2, mower.getPosition().getY(), "Mower's Y position should be 2");
-        assertEquals('N', mower.getPosition().getOrientation(), "Mower's orientation should be North");
+        assertEquals(Orientation.N, mower.getPosition().getOrientation(), "Mower's orientation should be North");
         assertEquals(9, mower.getCommands().size(), "Mower should have 9 commands");
         assertEquals(5, mower.getLawn().getHeight(), "Lawn's height should be 5");
         assertEquals(5, mower.getLawn().getWidth(), "Lawn's width should be 5");

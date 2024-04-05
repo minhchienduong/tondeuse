@@ -1,11 +1,14 @@
 package com.astrelya.tondeuse.model;
 
 import com.astrelya.tondeuse.model.enums.Command;
+import com.astrelya.tondeuse.model.enums.Orientation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+
+
 
 @Getter
 @Setter
@@ -16,7 +19,7 @@ public class Mower {
     private List<Command> commands;
     private Lawn lawn;
 
-    public Mower(int x, int y, char orientation, List<Command> commands, Lawn lawn) {
+    public Mower(int x, int y, Orientation orientation, List<Command> commands, Lawn lawn) {
         this.position = new Position(x, y, orientation);
         this.commands = commands;
         this.lawn = lawn;
@@ -44,36 +47,36 @@ public class Mower {
 
     private void rotateRight() {
         this.position.setOrientation(switch (this.position.getOrientation()) {
-            case 'N' -> 'E';
-            case 'E' -> 'S';
-            case 'S' -> 'W';
-            case 'W' -> 'N';
+            case N -> Orientation.E ;
+            case E -> Orientation.S;
+            case S -> Orientation.W;
+            case W -> Orientation.N;
             default -> this.position.getOrientation();
         });
     }
 
     private void rotateLeft() {
         this.position.setOrientation(switch (this.position.getOrientation()) {
-            case 'N' -> 'W';
-            case 'W' -> 'S';
-            case 'S' -> 'E';
-            case 'E' -> 'N';
+            case N -> Orientation.W ;
+            case W -> Orientation.S;
+            case S -> Orientation.E;
+            case E -> Orientation.N;
             default -> this.position.getOrientation();
         });
     }
 
     private void advance() {
         switch (this.position.getOrientation()) {
-            case 'N':
+            case N:
                 if (this.position.getY() < lawn.getHeight()) this.position.setY(this.position.getY() + 1);
                 break;
-            case 'S':
+            case S:
                 if (this.position.getY() > 0) this.position.setY(this.position.getY() - 1);
                 break;
-            case 'E':
+            case E:
                 if (this.position.getX() < lawn.getWidth()) this.position.setX(this.position.getX() + 1);
                 break;
-            case 'W':
+            case W:
                 if (this.position.getX() > 0) this.position.setX(this.position.getX() - 1);
                 break;
         }

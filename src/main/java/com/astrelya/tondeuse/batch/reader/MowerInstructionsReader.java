@@ -4,6 +4,7 @@ import com.astrelya.tondeuse.model.Position;
 import com.astrelya.tondeuse.model.enums.Command;
 import com.astrelya.tondeuse.model.Lawn;
 import com.astrelya.tondeuse.model.Mower;
+import com.astrelya.tondeuse.model.enums.Orientation;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.core.io.Resource;
 
@@ -70,7 +71,7 @@ public class MowerInstructionsReader implements ItemReader<Mower>{
 
         int x = Integer.parseInt(positionParts[0]);
         int y = Integer.parseInt(positionParts[1]);
-        char orientation = positionParts[2].charAt(0);
+        Orientation orientation = Orientation.valueOf(positionParts[2]);
 
         List<Command> commandList = parseCommands(commands);
 
