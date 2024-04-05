@@ -1,6 +1,7 @@
 package com.astrelya.tondeuse.batch.writer;
 
 import com.astrelya.tondeuse.model.Mower;
+import com.astrelya.tondeuse.model.Position;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 
@@ -23,7 +24,9 @@ public class MowerItemWriter implements ItemWriter<Mower> {
         List<? extends Mower> mowers = chunk.getItems();
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(outputFilePath, true)))) {
             for (Mower mower : mowers) {
-                writer.printf("%d %d %s%n", mower.getX(), mower.getY(), mower.getOrientation());
+                Position position = mower.getPosition();
+
+                writer.printf("%d %d %s%n", position.getX(), position.getY(), position.getOrientation());
             }
         } catch (IOException e) {
             throw new Exception("Unable to write to file: " + outputFilePath, e);

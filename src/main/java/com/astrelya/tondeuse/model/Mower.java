@@ -11,11 +11,16 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class Mower {
-    private int x;
-    private int y;
-    private char orientation;
+
+    private Position position;
     private List<Command> commands;
     private Lawn lawn;
+
+    public Mower(int x, int y, char orientation, List<Command> commands, Lawn lawn) {
+        this.position = new Position(x, y, orientation);
+        this.commands = commands;
+        this.lawn = lawn;
+    }
 
     public void executeCommands() {
         for (Command command : commands) {
@@ -38,39 +43,38 @@ public class Mower {
     }
 
     private void rotateRight() {
-        orientation = switch (orientation) {
+        this.position.setOrientation(switch (this.position.getOrientation()) {
             case 'N' -> 'E';
             case 'E' -> 'S';
             case 'S' -> 'W';
             case 'W' -> 'N';
-            default -> orientation;
-        };
+            default -> this.position.getOrientation();
+        });
     }
 
-
     private void rotateLeft() {
-        orientation = switch (orientation) {
+        this.position.setOrientation(switch (this.position.getOrientation()) {
             case 'N' -> 'W';
             case 'W' -> 'S';
             case 'S' -> 'E';
             case 'E' -> 'N';
-            default -> orientation;
-        };
+            default -> this.position.getOrientation();
+        });
     }
 
     private void advance() {
-        switch (orientation) {
+        switch (this.position.getOrientation()) {
             case 'N':
-                if (y < lawn.getHeight()) y++;
+                if (this.position.getY() < lawn.getHeight()) this.position.setY(this.position.getY() + 1);
                 break;
             case 'S':
-                if (y > 0) y--;
+                if (this.position.getY() > 0) this.position.setY(this.position.getY() - 1);
                 break;
             case 'E':
-                if (x < lawn.getWidth()) x++;
+                if (this.position.getX() < lawn.getWidth()) this.position.setX(this.position.getX() + 1);
                 break;
             case 'W':
-                if (x > 0) x--;
+                if (this.position.getX() > 0) this.position.setX(this.position.getX() - 1);
                 break;
         }
     }

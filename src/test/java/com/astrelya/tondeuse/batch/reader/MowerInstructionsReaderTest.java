@@ -45,14 +45,15 @@ public class MowerInstructionsReaderTest {
 
         Mower mower = reader.read();
         assertNotNull(mower);
-        assertEquals(1, mower.getX());
-        assertEquals(2, mower.getY());
-        assertEquals('N', mower.getOrientation());
-        assertEquals(9, mower.getCommands().size());
-        assertEquals(5, mower.getLawn().getHeight());
-        assertEquals(5, mower.getLawn().getWidth());
 
-        assertNull(reader.read());
+        assertEquals(1, mower.getPosition().getX(), "Mower's X position should be 1");
+        assertEquals(2, mower.getPosition().getY(), "Mower's Y position should be 2");
+        assertEquals('N', mower.getPosition().getOrientation(), "Mower's orientation should be North");
+        assertEquals(9, mower.getCommands().size(), "Mower should have 9 commands");
+        assertEquals(5, mower.getLawn().getHeight(), "Lawn's height should be 5");
+        assertEquals(5, mower.getLawn().getWidth(), "Lawn's width should be 5");
+
+        assertNull(reader.read(), "No more mowers should be available for reading");
     }
 
 }

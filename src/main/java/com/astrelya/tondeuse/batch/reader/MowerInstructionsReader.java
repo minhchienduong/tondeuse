@@ -1,5 +1,6 @@
 package com.astrelya.tondeuse.batch.reader;
 
+import com.astrelya.tondeuse.model.Position;
 import com.astrelya.tondeuse.model.enums.Command;
 import com.astrelya.tondeuse.model.Lawn;
 import com.astrelya.tondeuse.model.Mower;
@@ -73,8 +74,9 @@ public class MowerInstructionsReader implements ItemReader<Mower>{
 
         List<Command> commandList = parseCommands(commands);
 
-        Mower mower = new Mower(x, y, orientation, commandList, lawn);
-        return mower;
+        Position mowerPosition = new Position(x, y, orientation);
+
+        return new Mower(mowerPosition, commandList, lawn);
     }
 
     private List<Command> parseCommands(String commands) {

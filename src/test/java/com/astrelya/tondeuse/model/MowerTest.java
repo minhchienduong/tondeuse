@@ -19,60 +19,76 @@ public class MowerTest {
 
     @Test
     void testMowerExecutesCommandsCorrectly() {
-        Mower mower = new Mower(1, 2, 'N', Arrays.asList(Command.G, Command.A, Command.G, Command.A, Command.G, Command.A, Command.G, Command.A, Command.A), lawn);
+        Lawn lawn = new Lawn(5, 5);
+        Position position = new Position(1, 2, 'N');
+        Mower mower = new Mower(position, Arrays.asList(Command.G, Command.A, Command.G, Command.A, Command.G, Command.A, Command.G, Command.A, Command.A), lawn);
         mower.executeCommands();
 
-        assertEquals(1, mower.getX());
-        assertEquals(3, mower.getY());
-        assertEquals('N', mower.getOrientation());
+        assertEquals(1, mower.getPosition().getX(), "Mower's X position should be 1");
+        assertEquals(3, mower.getPosition().getY(), "Mower's Y position should be 3");
+        assertEquals('N', mower.getPosition().getOrientation(), "Mower's orientation should be North");
     }
 
     @Test
-    public void testRotateRight() {
-        Mower mower = new Mower(2, 2, 'N', Arrays.asList(Command.D), lawn);
+    void testRotateRight() {
+        Lawn lawn = new Lawn(5, 5);
+        Position position = new Position(2, 2, 'N');
+        Mower mower = new Mower(position, Arrays.asList(Command.D), lawn);
         mower.executeCommands();
-        assertEquals('E', mower.getOrientation(), "Mower should be facing East after rotating right from North.");
+        assertEquals('E', mower.getPosition().getOrientation(), "Mower should be facing East after rotating right from North.");
     }
 
     @Test
-    public void testRotateLeft() {
-        Mower mower = new Mower(2, 2, 'N', Arrays.asList(Command.G), lawn);
+    void testRotateLeft() {
+        Lawn lawn = new Lawn(5, 5);
+        Position position = new Position(2, 2, 'N');
+        Mower mower = new Mower(position, Arrays.asList(Command.G), lawn);
         mower.executeCommands();
-        assertEquals('W', mower.getOrientation(), "Mower should be facing West after rotating left from North.");
+        assertEquals('W', mower.getPosition().getOrientation(), "Mower should be facing West after rotating left from North.");
     }
 
     @Test
     public void testAdvanceNorth() {
-        Mower mower = new Mower(2, 2, 'N', Arrays.asList(Command.A), lawn);
+        Lawn lawn = new Lawn(5, 5);
+        Position position = new Position(2, 2, 'N');
+        Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
-        assertEquals(3, mower.getY(), "Mower should have advanced North by one position.");
+        assertEquals(3, mower.getPosition().getY(), "Mower should have advanced North by one position.");
     }
 
     @Test
     public void testAdvanceSouth() {
-        Mower mower = new Mower(2, 3, 'S', Arrays.asList(Command.A), lawn);
+        Lawn lawn = new Lawn(5, 5);
+        Position position = new Position(2, 3, 'S');
+        Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
-        assertEquals(2, mower.getY(), "Mower should have advanced South by one position.");
+        assertEquals(2, mower.getPosition().getY(), "Mower should have advanced South by one position.");
     }
 
     @Test
     public void testAdvanceEast() {
-        Mower mower = new Mower(2, 2, 'E', Arrays.asList(Command.A), lawn);
+        Lawn lawn = new Lawn(5, 5);
+        Position position = new Position(2, 2, 'E');
+        Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
-        assertEquals(3, mower.getX(), "Mower should have advanced East by one position.");
+        assertEquals(3, mower.getPosition().getX(), "Mower should have advanced East by one position.");
     }
 
     @Test
     public void testAdvanceWest() {
-        Mower mower = new Mower(3, 2, 'W', Arrays.asList(Command.A), lawn);
+        Lawn lawn = new Lawn(5, 5);
+        Position position = new Position(3, 2, 'W');
+        Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
-        assertEquals(2, mower.getX(), "Mower should have advanced West by one position.");
+        assertEquals(2, mower.getPosition().getX(), "Mower should have advanced West by one position.");
     }
 
     @Test
     public void testAdvanceDoesNotExceedLawnBoundaries() {
-        Mower mower = new Mower(5, 5, 'N', Arrays.asList(Command.A), lawn);
+        Lawn lawn = new Lawn(5, 5);
+        Position position = new Position(5, 5, 'N');
+        Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
-        assertEquals(5, mower.getY(), "Mower should not move beyond the lawn's boundary.");
+        assertEquals(5, mower.getPosition().getY(), "Mower should not move beyond the lawn's boundary.");
     }
 }
