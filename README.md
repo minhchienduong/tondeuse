@@ -2,7 +2,7 @@
 
 **Build Tool Configuration**
 
-Ajouter: <packaging>jar</packaging>
+Ajouter <packaging>jar</packaging>
 
 Dans build plugin configuration, ajouter le Buildpacks:
           <image>
