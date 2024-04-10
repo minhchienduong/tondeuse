@@ -29,7 +29,7 @@ public class MowerItemWriter implements ItemWriter<Mower> {
                 writer.printf("%d %d %s%n", position.getX(), position.getY(), position.getOrientation());
             }
         } catch (IOException e) {
-            throw new Exception("Unable to write to file: " + outputFilePath, e);
+            throw new IOException("Unable to write to file: " + outputFilePath, e);
         }
     }
 
