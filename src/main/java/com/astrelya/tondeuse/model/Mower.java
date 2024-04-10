@@ -33,36 +33,18 @@ public class Mower {
 
     private void move(Command command) {
         switch (command) {
-            case D:
-                rotateRight();
-                break;
-            case G:
-                rotateLeft();
-                break;
-            case A:
-                advance();
-                break;
+            case D -> rotateRight();
+            case G -> rotateLeft();
+            case A -> advance();
         }
     }
 
     private void rotateRight() {
-        this.position.setOrientation(switch (this.position.getOrientation()) {
-            case N -> Orientation.E ;
-            case E -> Orientation.S;
-            case S -> Orientation.W;
-            case W -> Orientation.N;
-            default -> this.position.getOrientation();
-        });
+        this.position.setOrientation(this.position.getOrientation().rotateRight());
     }
 
     private void rotateLeft() {
-        this.position.setOrientation(switch (this.position.getOrientation()) {
-            case N -> Orientation.W ;
-            case W -> Orientation.S;
-            case S -> Orientation.E;
-            case E -> Orientation.N;
-            default -> this.position.getOrientation();
-        });
+        this.position.setOrientation(this.position.getOrientation().rotateLeft());
     }
 
     private void advance() {

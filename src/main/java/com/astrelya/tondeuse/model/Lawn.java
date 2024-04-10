@@ -10,4 +10,5 @@ import lombok.Setter;
 public class Lawn {
     private int width;
     private int height;
+
 }
