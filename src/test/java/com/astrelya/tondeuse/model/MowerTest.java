@@ -10,18 +10,17 @@ import java.util.Arrays;
 import static com.astrelya.tondeuse.model.enums.Orientation.N;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MowerTest {
+class MowerTest {
 
-    private Lawn lawn;
+    private Coordinate lawn;
 
     @BeforeEach
     void setUp() {
-        lawn = new Lawn(5, 5);
+        lawn = new Coordinate(5, 5);
     }
 
     @Test
     void testMowerExecutesCommandsCorrectly() {
-        Lawn lawn = new Lawn(5, 5);
         Position position = new Position(1, 2, N);
         Mower mower = new Mower(position, Arrays.asList(Command.G, Command.A, Command.G, Command.A, Command.G, Command.A, Command.G, Command.A, Command.A), lawn);
         mower.executeCommands();
@@ -33,7 +32,6 @@ public class MowerTest {
 
     @Test
     void testRotateRight() {
-        Lawn lawn = new Lawn(5, 5);
         Position position = new Position(2, 2, N);
         Mower mower = new Mower(position, Arrays.asList(Command.D), lawn);
         mower.executeCommands();
@@ -42,7 +40,6 @@ public class MowerTest {
 
     @Test
     void testRotateLeft() {
-        Lawn lawn = new Lawn(5, 5);
         Position position = new Position(2, 2, N);
         Mower mower = new Mower(position, Arrays.asList(Command.G), lawn);
         mower.executeCommands();
@@ -50,8 +47,7 @@ public class MowerTest {
     }
 
     @Test
-    public void testAdvanceNorth() {
-        Lawn lawn = new Lawn(5, 5);
+    void testAdvanceNorth() {
         Position position = new Position(2, 2, N);
         Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
@@ -59,8 +55,7 @@ public class MowerTest {
     }
 
     @Test
-    public void testAdvanceSouth() {
-        Lawn lawn = new Lawn(5, 5);
+    void testAdvanceSouth() {
         Position position = new Position(2, 3, Orientation.S);
         Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
@@ -68,8 +63,7 @@ public class MowerTest {
     }
 
     @Test
-    public void testAdvanceEast() {
-        Lawn lawn = new Lawn(5, 5);
+    void testAdvanceEast() {
         Position position = new Position(2, 2, Orientation.E);
         Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
@@ -77,8 +71,7 @@ public class MowerTest {
     }
 
     @Test
-    public void testAdvanceWest() {
-        Lawn lawn = new Lawn(5, 5);
+    void testAdvanceWest() {
         Position position = new Position(3, 2, Orientation.W);
         Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();
@@ -86,8 +79,7 @@ public class MowerTest {
     }
 
     @Test
-    public void testAdvanceDoesNotExceedLawnBoundaries() {
-        Lawn lawn = new Lawn(5, 5);
+    void testAdvanceDoesNotExceedLawnBoundaries() {
         Position position = new Position(5, 5, N);
         Mower mower = new Mower(position, Arrays.asList(Command.A), lawn);
         mower.executeCommands();

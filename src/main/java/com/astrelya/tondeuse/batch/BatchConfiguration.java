@@ -1,7 +1,7 @@
 package com.astrelya.tondeuse.batch;
 
 import com.astrelya.tondeuse.batch.processor.MowerItemProcessor;
-import com.astrelya.tondeuse.batch.reader.MowerInstructionsReader;
+import com.astrelya.tondeuse.batch.reader.MowerItemReader;
 import com.astrelya.tondeuse.batch.writer.MowerItemWriter;
 import com.astrelya.tondeuse.model.Mower;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class BatchConfiguration {
     private final PlatformTransactionManager transactionManager;
     @Bean
     public ItemReader<Mower> reader(@Value("${mower.input.filePath}") String inputFilePath) {
-        return new MowerInstructionsReader(new FileSystemResource(inputFilePath));
+        return new MowerItemReader(new FileSystemResource(inputFilePath));
     }
 
     @Bean
