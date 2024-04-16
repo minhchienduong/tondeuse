@@ -2,7 +2,7 @@ package com.astrelya.tondeuse.batch.reader;
 
 import com.astrelya.tondeuse.model.Position;
 import com.astrelya.tondeuse.model.enums.Command;
-import com.astrelya.tondeuse.model.Lawn;
+import com.astrelya.tondeuse.model.Coordinate;
 import com.astrelya.tondeuse.model.Mower;
 import com.astrelya.tondeuse.model.enums.Orientation;
 import org.springframework.batch.item.ItemReader;
@@ -13,13 +13,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-public class MowerInstructionsReader implements ItemReader<Mower>{
+public class MowerItemReader implements ItemReader<Mower>{
 
     private Resource inputFile;
     private BufferedReader reader;
-    private Lawn lawn;
+    private Coordinate coordinate;
 
-    public MowerInstructionsReader(Resource inputFile) {
+    public MowerItemReader(Resource inputFile) {
         this.inputFile = inputFile;
     }
 
@@ -52,15 +52,15 @@ public class MowerInstructionsReader implements ItemReader<Mower>{
             throw new IOException("Input file is empty, expected lawn size.");
         }
         validateLawnSizeLine(lawnSizeLine);
-        lawn = parseLawnSize(lawnSizeLine);
+        coordinate = parseLawnSize(lawnSizeLine);
     }
 
-    private Lawn parseLawnSize(String lawnSizeLine) {
+    private Coordinate parseLawnSize(String lawnSizeLine) {
         String[] parts = lawnSizeLine.split(" ");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid lawn size format. Expected format: 'width height'");
         }
-        return new Lawn(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+        return new Coordinate(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
     }
 
     private Mower createMowerWithCommands(String position, String commands) {
@@ -77,7 +77,7 @@ public class MowerInstructionsReader implements ItemReader<Mower>{
 
         Position mowerPosition = new Position(x, y, orientation);
 
-        return new Mower(mowerPosition, commandList, lawn);
+        return new Mower(mowerPosition, commandList, coordinate);
     }
 
     private List<Command> parseCommands(String commands) {

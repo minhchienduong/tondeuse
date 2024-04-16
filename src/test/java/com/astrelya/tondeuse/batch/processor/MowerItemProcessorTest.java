@@ -2,7 +2,7 @@ package com.astrelya.tondeuse.batch.processor;
 
 import com.astrelya.tondeuse.model.Position;
 import com.astrelya.tondeuse.model.enums.Command;
-import com.astrelya.tondeuse.model.Lawn;
+import com.astrelya.tondeuse.model.Coordinate;
 import com.astrelya.tondeuse.model.Mower;
 import com.astrelya.tondeuse.model.enums.Orientation;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 
-public class MowerItemProcessorTest {
+class MowerItemProcessorTest {
 
     private MowerItemProcessor processor;
 
@@ -23,13 +23,13 @@ public class MowerItemProcessorTest {
     @Test
     void testProcessExecutesCommandsCorrectly() throws Exception {
 
-        Lawn lawn = new Lawn(5, 5);
+        Coordinate coordinate = new Coordinate(5, 5);
 
         Position initialPosition = new Position(1, 2, Orientation.N);
 
         Mower mower = new Mower(initialPosition,
                 Arrays.asList(Command.G, Command.A, Command.G, Command.A, Command.G, Command.A, Command.G, Command.A, Command.A),
-                lawn);
+                coordinate);
 
         Mower processedMower = processor.process(mower);
 

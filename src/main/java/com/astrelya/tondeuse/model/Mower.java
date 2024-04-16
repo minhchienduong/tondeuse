@@ -17,9 +17,9 @@ public class Mower {
 
     private Position position;
     private List<Command> commands;
-    private Lawn lawn;
+    private Coordinate lawn;
 
-    public Mower(int x, int y, Orientation orientation, List<Command> commands, Lawn lawn) {
+    public Mower(int x, int y, Orientation orientation, List<Command> commands, Coordinate lawn) {
         this.position = new Position(x, y, orientation);
         this.commands = commands;
         this.lawn = lawn;
@@ -48,19 +48,18 @@ public class Mower {
     }
 
     private void advance() {
-        switch (this.position.getOrientation()) {
-            case N:
-                if (this.position.getY() < lawn.getHeight()) this.position.setY(this.position.getY() + 1);
-                break;
-            case S:
-                if (this.position.getY() > 0) this.position.setY(this.position.getY() - 1);
-                break;
-            case E:
-                if (this.position.getX() < lawn.getWidth()) this.position.setX(this.position.getX() + 1);
-                break;
-            case W:
-                if (this.position.getX() > 0) this.position.setX(this.position.getX() - 1);
-                break;
+        Position nextPosition = new Position(position.getX(), position.getY(), position.getOrientation());
+
+        switch (position.getOrientation()) {
+            case N -> nextPosition.setY(nextPosition.getY() + 1);
+            case S -> nextPosition.setY(nextPosition.getY() - 1);
+            case E -> nextPosition.setX(nextPosition.getX() + 1);
+            case W -> nextPosition.setX(nextPosition.getX() - 1);
+        }
+
+        if(lawn.canMove(nextPosition)) {
+            position.setX(nextPosition.getX());
+            position.setY(nextPosition.getY());
         }
     }
 
