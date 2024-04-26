@@ -14,13 +14,13 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- class MowerInstructionsReaderTest {
+ class MowerItemReaderTest {
 
     Resource mockResource;
     MowerItemReader reader;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         mockResource = Mockito.mock(Resource.class);
     }
 
